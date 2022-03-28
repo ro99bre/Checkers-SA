@@ -13,10 +13,10 @@ class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
 
   private val undoManager = new UndoManager
   val injector = Guice.createInjector(new CheckersModule)
-  val fileIo = injector.instance[FileIOTrait]
+  val fileIo = injector.getInstance(classOf[FileIOTrait])
 
   override def createGame():Unit = {
-    game = injector.instance[GameTrait]
+    game = injector.getInstance(classOf[GameTrait])
     notifyObservers()
   }
 

@@ -21,7 +21,7 @@ class FileIO extends FileIOTrait {
     val sourceString : String = source.getLines().mkString
     val json : JsValue = Json.parse(sourceString)
     val injector = Guice.createInjector(new CheckersModule)
-    var game : GameTrait = injector.instance[GameTrait]
+    var game : GameTrait = injector.getInstance(classOf[GameTrait])
     var board : Board = game.getBoard()
     var pb : Vector[Piece] = game.getPB()
     var pw : Vector[Piece] = game.getPW()

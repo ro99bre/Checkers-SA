@@ -13,7 +13,7 @@ class FileIO extends FileIOTrait{
 
   override def load(): GameTrait = {
     val injector = Guice.createInjector(new CheckersModule)
-    var game : GameTrait = injector.instance[GameTrait]
+    var game : GameTrait = injector.getInstance(classOf[GameTrait])
     var board : Board = game.getBoard()
     var pb : Vector[Piece] = game.getPB()
     var pw : Vector[Piece] = game.getPW()
