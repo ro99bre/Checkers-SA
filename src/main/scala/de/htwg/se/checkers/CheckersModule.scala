@@ -13,7 +13,7 @@ import de.htwg.se.checkers.model.FileIOComponent.fileIoJsonFileChooserImpl
 
 class CheckersModule extends AbstractModule with ScalaModule {
 
-  override def configure() {
+  override def configure() = {
     bind[GameTrait].to[GameBaseImpl.Game]
     bind[ControllerTrait].to[controllerBaseImpl.Controller]
     //bind[FileIOTrait].to[fileIoXmlImpl.FileIO]
