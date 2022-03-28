@@ -1,18 +1,19 @@
 name := "Checkers"
 version := "1.0"
-scalaVersion := "2.13.8"
+scalaVersion := "3.1.1"
+crossScalaVersions ++= Seq("2.13.8", "3.1.1")
 
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.11"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.11" % "test"
 libraryDependencies += "org.scalatestplus" %% "junit-4-13" % "3.2.11.0" % "test"
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.0.1"
-libraryDependencies += "com.typesafe.play" %% "play-json" % "2.9.2"
+libraryDependencies += ("com.typesafe.play" %% "play-json" % "2.9.2").cross(CrossVersion.for3Use2_13)
 
 libraryDependencies += "com.google.inject" % "guice" % "5.1.0"
-libraryDependencies += "net.codingwell" % "scala-guice_2.13" % "5.0.2"
+libraryDependencies += ("net.codingwell" %% "scala-guice" % "5.0.2").cross(CrossVersion.for3Use2_13)
 
-libraryDependencies += "org.scalafx" %% "scalafx" % "14-R19"
+libraryDependencies += ("org.scalafx" %% "scalafx" % "14-R19").cross(CrossVersion.for3Use2_13)
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 // Determine OS version of JavaFX binaries
