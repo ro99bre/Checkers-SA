@@ -233,9 +233,13 @@ class GUI(controller: ControllerTrait) extends JFXApp with Observer {
 
   def winner(): Node = {
     val winner: Node = new Text {
-      controller.getGame().getWinnerColor() match {
-        case Color.black => text = "Winner: Red"
-        case Color.white => text = "Winner: White"
+      val winnercolor = Option(controller.getGame().getWinnerColor())
+      winnercolor match {
+        case Some(value) =>
+          if(value == Color.black)
+            text = "Winner: Red"
+          else if(value == Color.white)
+            text = "Winner: White"
       }
       style = "-fx-font-size: " + stage.getHeight/29 + "pt;"
     }
