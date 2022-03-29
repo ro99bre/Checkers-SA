@@ -20,9 +20,12 @@ object CheckersTUI {
     var input: String = ""
     if (args.length > 0) input = args(0)
     if(!input.isEmpty) {
-      if (controller.getGame().getWinnerColor().isDefined) println("Winner: " + controller.getGame().getWinnerColor)
-      else if (controller.getGame().getLastMoveColor() == Color.white) print("Next Player: Black\nNext move: ")
-      else print("Next Player: White\nNext move: ")
+      if (controller.getGame().getWinnerColor().isDefined)
+        println("Winner: " + controller.getGame().getWinnerColor())
+      else if (controller.getGame().getLastMoveColor() == Color.white)
+        print("Next Player: Black\nNext move: ")
+      else
+        print("Next Player: White\nNext move: ")
       tui.tuiProcessor(input)
     } else {
       while (input != "exit")
