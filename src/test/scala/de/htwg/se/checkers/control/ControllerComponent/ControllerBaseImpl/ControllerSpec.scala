@@ -13,7 +13,7 @@ class ControllerSpec extends AnyWordSpec with Matchers{
       val game = new Game()
       val controller = new Controller(game)
       val observer = new Observer {
-        var updated: Boolean = false
+        //var updated: Boolean = false
         override def update(): Unit = updated = true
       }
       "return the current game" in {
