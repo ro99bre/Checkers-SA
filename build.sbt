@@ -13,7 +13,7 @@ libraryDependencies += ("com.typesafe.play" %% "play-json" % "2.9.2").cross(Cros
 libraryDependencies += "com.google.inject" % "guice" % "5.1.0"
 libraryDependencies += ("net.codingwell" %% "scala-guice" % "5.0.2").cross(CrossVersion.for3Use2_13)
 
-libraryDependencies += ("org.scalafx" %% "scalafx" % "14-R19").cross(CrossVersion.for3Use2_13)
+libraryDependencies += "org.scalafx" %% "scalafx" % "17.0.1-R26"
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 // Determine OS version of JavaFX binaries
@@ -27,7 +27,7 @@ lazy val osName = System.getProperty("os.name") match {
 // Add JavaFX dependencies
 lazy val javaFXModules = Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
 libraryDependencies ++= javaFXModules.map( m=>
-  "org.openjfx" % s"javafx-$m" % "14.0.1" classifier osName
+  "org.openjfx" % s"javafx-$m" % "17.0.1" classifier osName
 )
 
 coverageExcludedPackages := ".*GUI.*;.*TUI.*;.*MockImpl.*;.*FileChooserImpl.*"
