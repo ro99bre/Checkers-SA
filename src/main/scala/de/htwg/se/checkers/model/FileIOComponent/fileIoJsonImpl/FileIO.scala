@@ -1,11 +1,12 @@
 package de.htwg.se.checkers.model.FileIOComponent.fileIoJsonImpl
 
 import com.google.inject.Guice
+import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.checkers.CheckersModule
 import de.htwg.se.checkers.model.FileIOComponent.FileIOTrait
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Board, Color, Game, Kicked, Piece, Queen}
 import de.htwg.se.checkers.model.GameComponent.GameTrait
-import net.codingwell.scalaguice.InjectorExtensions._
+
 import play.api.libs.json.{JsObject, JsValue, Json, Writes}
 
 import scala.io.{BufferedSource, Source}
@@ -72,8 +73,9 @@ class FileIO extends FileIOTrait {
     game
   }
 
-  implicit val gameWrites = new Writes(classOf[GameTrait]) {
-    def writes(game: GameTrait): JsObject = Json.obj(
+  //implicit val gameWrites = new Writes[GameTrait] {
+  //def gameToJson(game: Game): JsObject = {
+  def writes(game: GameTrait): JsObject = Json.obj(
       "game" -> Json.obj(
         "board" -> Json.obj(
           "cells" -> Json.toJson(
@@ -121,12 +123,13 @@ class FileIO extends FileIOTrait {
         else "winnerColor" -> "None"
       )
     )
-  }
+  //}
 
   override def save(game: GameTrait): Unit = {
     import java.io._
     val pw = new PrintWriter(new File("game.json"))
-    pw.write(Json.prettyPrint(Json.toJson(game)))
+    //pw.write(Json.prettyPrint(Json.toJson(game)))
+    pw.write(Json.prettyPrint(writes(game)))
     pw.close()
   }
 }

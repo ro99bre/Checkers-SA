@@ -240,6 +240,7 @@ class GUI(controller: ControllerTrait) extends JFXApp with Observer {
             text = "Winner: Red"
           else if(value == Color.white)
             text = "Winner: White"
+        case None =>
       }
       style = "-fx-font-size: " + stage.getHeight/29 + "pt;"
     }

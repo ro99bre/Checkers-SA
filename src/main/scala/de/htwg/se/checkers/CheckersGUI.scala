@@ -12,7 +12,7 @@ object CheckersGUI {
 
   def main(args: Array[String]): Unit = {
 
-    println("Started Checkers in TUI Mode")
+    println("Started Checkers in GUI Mode")
 
     val tui = new TextUI(controller)
     val gui = new GUI(controller)

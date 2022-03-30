@@ -1,6 +1,7 @@
 package de.htwg.se.checkers.util
 
 trait Observer {
+  var updated: Boolean = false
   def update(): Unit
 }
 

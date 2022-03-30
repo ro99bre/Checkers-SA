@@ -76,8 +76,8 @@ class FileIO extends FileIOTrait {
     game
   }
 
-  implicit val gameWrites = new Writes[GameTrait] {
-    def writes(game: GameTrait): JsObject = Json.obj(
+  //implicit val gameWrites = new Writes[GameTrait] {
+  def writes(game: GameTrait): JsObject = Json.obj(
       "game" -> Json.obj(
         "board" -> Json.obj(
           "cells" -> Json.toJson(
@@ -125,7 +125,7 @@ class FileIO extends FileIOTrait {
         else "winnerColor" -> "None"
       )
     )
-  }
+  //}
 
   override def save(game: GameTrait): Unit = {
     import java.io._
@@ -135,7 +135,8 @@ class FileIO extends FileIOTrait {
     if (file != null) {
       print("Printing to File " + file.getAbsolutePath)
       val pw = new PrintWriter(new File(file.getAbsolutePath))
-      pw.write(Json.prettyPrint(Json.toJson(game)))
+      //pw.write(Json.prettyPrint(Json.toJson(game)))
+      pw.write(Json.prettyPrint(writes(game)))
       pw.close()
     }
   }
