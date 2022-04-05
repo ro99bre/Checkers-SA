@@ -1,5 +1,6 @@
 package de.htwg.se.checkers.model.GameComponent.GameBaseImpl
 
+import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Color
 import de.htwg.se.checkers.model.GameComponent.{CellTrait, GameBaseImpl, GameTrait}
 
 /**
@@ -130,15 +131,13 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   override def deCrown(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, GameBaseImpl.Piece(pieces(index).color,
     Queen.notQueen, pieces(index).kicked))
 
-  override def moveBlackRules(s:CellTrait, d:CellTrait): Option[Vector[Piece]] = {
-    if (d.y - 1 == s.y && (d.x - 1 == s.x || d.x + 1 == s.x)) return Some(opponentPieces(s))
-    else if (d.y - 2 == s.y && (d.x - 2 == s.x || d.x + 2 == s.x)) return kickPieceCheck(s, d)
-    None
-  }
-
-  override def moveWhiteRules(s:CellTrait, d:CellTrait): Option[Vector[Piece]] = {
-    if (d.y + 1 == s.y && (d.x - 1 == s.x || d.x + 1 == s.x)) return Some(opponentPieces(s))
-    else if (d.y + 2 == s.y && (d.x - 2 == s.x || d.x + 2 == s.x)) return kickPieceCheck(s, d)
+  override def moveRules(s:CellTrait, d:CellTrait, c:Color.Value): Option[Vector[Piece]] = {
+    if (c == Color.black)
+      if (d.y - 1 == s.y && (d.x - 1 == s.x || d.x + 1 == s.x)) return Some(opponentPieces(s))
+      else if (d.y - 2 == s.y && (d.x - 2 == s.x || d.x + 2 == s.x)) return kickPieceCheck(s, d)
+    else if(c == Color.white)
+      if (d.y + 1 == s.y && (d.x - 1 == s.x || d.x + 1 == s.x)) return Some(opponentPieces(s))
+      else if (d.y + 2 == s.y && (d.x - 2 == s.x || d.x + 2 == s.x)) return kickPieceCheck(s, d)
     None
   }
 

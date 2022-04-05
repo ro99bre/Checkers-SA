@@ -31,9 +31,11 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
 
   override def deCrown(pieces: Vector[Piece], index: Int): Vector[Piece] = this.pb
 
-  override def moveBlackRules(s:CellTrait, d:CellTrait): Option[Vector[Piece]] = None
+  override def moveRules(s: CellTrait, d: CellTrait, c: Color.Value): Option[Vector[Piece]] = None
 
-  override def moveWhiteRules(s:CellTrait, d:CellTrait): Option[Vector[Piece]] = None
+  //override def moveBlackRules(s:CellTrait, d:CellTrait): Option[Vector[Piece]] = None
+
+  //override def moveWhiteRules(s:CellTrait, d:CellTrait): Option[Vector[Piece]] = None
 
   override def kickPieceCheck(s:CellTrait, d:CellTrait): Option[Vector[Piece]] = None
 
