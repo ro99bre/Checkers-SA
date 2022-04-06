@@ -244,37 +244,40 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
 
   //checks if cells around start cell are empty for possible moves
   override def plusCheck(start:CellTrait, board: Board): Boolean = {
-    if (yxPlusOneCheck(start) && cellEmptyCheck(board.cells.cell(start.y+1, start.x+1))) return false
-    if (yxPlusMinusOneCheck(start) && cellEmptyCheck(board.cells.cell(start.y+1, start.x-1))) return false
-    if (yxPlusTwoCheck(start) && cellEmptyCheck(board.cells.cell(start.y+2, start.x+2))) return false
-    if (yxPlusMinusTwoCheck(start) && cellEmptyCheck(board.cells.cell(start.y+2, start.x-2))) return false
+    if (check(start, yxPlusOne(_))      && cellEmptyCheck(board.cells.cell(start.y+1, start.x+1))) return false
+    if (check(start, yxPlusMinusOne(_)) && cellEmptyCheck(board.cells.cell(start.y+1, start.x-1))) return false
+    if (check(start, yxPlusTwo(_))      && cellEmptyCheck(board.cells.cell(start.y+2, start.x+2))) return false
+    if (check(start, yxPlusMinusTwo(_)) && cellEmptyCheck(board.cells.cell(start.y+2, start.x-2))) return false
     true
   }
 
   override def minusCheck(start:CellTrait, board: Board) : Boolean = {
-    if (yxMinusOneCheck(start) && cellEmptyCheck(board.cells.cell(start.y-1, start.x-1))) return false
-    if (yxMinusPlusOneCheck(start) && cellEmptyCheck(board.cells.cell(start.y-1, start.x+1))) return false
-    if (yxMinusTwoCheck(start) && cellEmptyCheck(board.cells.cell(start.y-2, start.x-2))) return false
-    if (yxMinusPlusTwoCheck(start) && cellEmptyCheck(board.cells.cell(start.y-2, start.x+2))) return false
+    if (check(start, yxMinusOne(_))     && cellEmptyCheck(board.cells.cell(start.y-1, start.x-1))) return false
+    if (check(start, yxMinusPlusOne(_)) && cellEmptyCheck(board.cells.cell(start.y-1, start.x+1))) return false
+    if (check(start, yxMinusTwo(_))     && cellEmptyCheck(board.cells.cell(start.y-2, start.x-2))) return false
+    if (check(start, yxMinusPlusTwo(_)) && cellEmptyCheck(board.cells.cell(start.y-2, start.x+2))) return false
     true
   }
 
   //tries different coordinates, which are in reach from the start cell; returns true if cell with those coordinates exists
-  override def yxPlusOneCheck(s:CellTrait) : Boolean = s.y + 1 >= 0 && s.y + 1 <= 7 && s.x + 1 >= 0 && s.x + 1 <= 7
+  private def check(cell: CellTrait, checkFunction: CellTrait => Boolean): Boolean =
+    checkFunction.apply(cell)
 
-  override def yxPlusMinusOneCheck(s:CellTrait) : Boolean = s.y + 1 >= 0 && s.y + 1 <= 7 && s.x - 1 >= 0 && s.x - 1 <= 7
+  private def yxPlusOne(s: CellTrait): Boolean =      s.y + 1 >= 0 && s.y + 1 <= 7 && s.x + 1 >= 0 && s.x + 1 <= 7
 
-  override def yxMinusOneCheck(s:CellTrait) : Boolean = s.y - 1 >= 0 && s.y - 1 <= 7 && s.x - 1 >= 0 && s.x - 1 <= 7
+  private def yxPlusMinusOne(s: CellTrait): Boolean = s.y + 1 >= 0 && s.y + 1 <= 7 && s.x - 1 >= 0 && s.x - 1 <= 7
 
-  override def yxMinusPlusOneCheck(s:CellTrait) : Boolean = s.y - 1 >= 0 && s.y - 1 <= 7 && s.x + 1 >= 0 && s.x + 1 <= 7
+  private def yxMinusOne(s: CellTrait): Boolean =     s.y - 1 >= 0 && s.y - 1 <= 7 && s.x - 1 >= 0 && s.x - 1 <= 7
 
-  override def yxPlusTwoCheck(s:CellTrait) : Boolean = s.y + 2 >= 0 && s.y + 2 <= 7 && s.x + 2 >= 0 && s.x + 2 <= 7
+  private def yxMinusPlusOne(s: CellTrait): Boolean = s.y - 1 >= 0 && s.y - 1 <= 7 && s.x + 1 >= 0 && s.x + 1 <= 7
 
-  override def yxPlusMinusTwoCheck(s:CellTrait) : Boolean = s.y + 2 >= 0 && s.y + 2 <= 7 && s.x - 2 >= 0 && s.x - 2 <= 7
+  private def yxPlusTwo(s: CellTrait): Boolean =      s.y + 2 >= 0 && s.y + 2 <= 7 && s.x + 2 >= 0 && s.x + 2 <= 7
 
-  override def yxMinusTwoCheck(s:CellTrait) : Boolean = s.y - 2 >= 0 && s.y - 2 <= 7 && s.x - 2 >= 0 && s.x - 2 <= 7
+  private def yxPlusMinusTwo(s: CellTrait): Boolean = s.y + 2 >= 0 && s.y + 2 <= 7 && s.x - 2 >= 0 && s.x - 2 <= 7
 
-  override def yxMinusPlusTwoCheck(s:CellTrait) : Boolean = s.y - 2 >= 0 && s.y - 2 <= 7 && s.x + 2 >= 0 && s.x + 2 <= 7
+  private def yxMinusTwo(s: CellTrait): Boolean =     s.y - 2 >= 0 && s.y - 2 <= 7 && s.x - 2 >= 0 && s.x - 2 <= 7
+
+  private def yxMinusPlusTwo(s: CellTrait): Boolean = s.y - 2 >= 0 && s.y - 2 <= 7 && s.x + 2 >= 0 && s.x + 2 <= 7
 
   override def toString: String = {
     var sb  = new StringBuilder()

@@ -37,14 +37,14 @@ trait GameTrait {
   //def isWhiteBlocked(board: Board): Boolean
   def plusCheck(start:CellTrait, board: Board): Boolean
   def minusCheck(start:CellTrait, board: Board) : Boolean
-  def yxPlusOneCheck(s:CellTrait) : Boolean
-  def yxPlusMinusOneCheck(s:CellTrait) : Boolean
-  def yxMinusOneCheck(s:CellTrait) : Boolean
-  def yxMinusPlusOneCheck(s:CellTrait) : Boolean
-  def yxPlusTwoCheck(s:CellTrait) : Boolean
-  def yxPlusMinusTwoCheck(s:CellTrait) : Boolean
-  def yxMinusTwoCheck(s:CellTrait) : Boolean
-  def yxMinusPlusTwoCheck(s:CellTrait) : Boolean
+  //def yxPlusOneCheck(s:CellTrait) : Boolean
+  //def yxPlusMinusOneCheck(s:CellTrait) : Boolean
+  //def yxMinusOneCheck(s:CellTrait) : Boolean
+  //def yxMinusPlusOneCheck(s:CellTrait) : Boolean
+  //def yxPlusTwoCheck(s:CellTrait) : Boolean
+  //def yxPlusMinusTwoCheck(s:CellTrait) : Boolean
+  //def yxMinusTwoCheck(s:CellTrait) : Boolean
+  //def yxMinusPlusTwoCheck(s:CellTrait) : Boolean
   def updateGame(cell: CellTrait, lmc:Color.Value, piece: Option[Piece] = None, index: Option[Int] = None, winner:Option[Color.Value] = None) : GameTrait
 
   def getLastMoveColor() : Color.Value

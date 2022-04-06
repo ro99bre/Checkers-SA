@@ -71,21 +71,21 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
 
   override def minusCheck(start:CellTrait, board: Board) : Boolean = false
 
-  override def yxPlusOneCheck(s:CellTrait) : Boolean = false
+  //override def yxPlusOneCheck(s:CellTrait) : Boolean = false
 
-  override def yxPlusMinusOneCheck(s:CellTrait) : Boolean = false
+  //override def yxPlusMinusOneCheck(s:CellTrait) : Boolean = false
 
-  override def yxMinusOneCheck(s:CellTrait) : Boolean = false
+  //override def yxMinusOneCheck(s:CellTrait) : Boolean = false
 
-  override def yxMinusPlusOneCheck(s:CellTrait) : Boolean = false
+  //override def yxMinusPlusOneCheck(s:CellTrait) : Boolean = false
 
-  override def yxPlusTwoCheck(s:CellTrait) : Boolean = false
+  //override def yxPlusTwoCheck(s:CellTrait) : Boolean = false
 
-  override def yxPlusMinusTwoCheck(s:CellTrait) : Boolean = false
+  //override def yxPlusMinusTwoCheck(s:CellTrait) : Boolean = false
 
-  override def yxMinusTwoCheck(s:CellTrait) : Boolean = false
+  //override def yxMinusTwoCheck(s:CellTrait) : Boolean = false
 
-  override def yxMinusPlusTwoCheck(s:CellTrait) : Boolean = false
+  //override def yxMinusPlusTwoCheck(s:CellTrait) : Boolean = false
 
   override def toString: String = ""
 
