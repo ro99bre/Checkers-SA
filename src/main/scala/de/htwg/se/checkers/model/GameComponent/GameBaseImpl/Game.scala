@@ -215,41 +215,29 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   }
 
   override def isBlocked(board: Board) : Option[Color.Value] = {//returns winner color
-    if (isBlackBlocked(board)) Some(Color.white)
-    else if (isWhiteBlocked(board)) Some(Color.black)
+    if (isColorBlocked(board, Color.black)) Some(Color.white)
+    else if (isColorBlocked(board, Color.white)) Some(Color.black)
     else None
   }
 
-  override def isBlackBlocked(board: Board): Boolean = {
+  override def isColorBlocked(board: Board, color: Color.Value): Boolean = {
     var bool : Boolean = false
     for (y <- 0 until 8;
          x <- 0 until 8) {
-      var start : CellTrait = board.cells.cell(y,x)
-      if (start.piece.isDefined && start.piece.get.color == Color.black) {
-        if (plusCheck(start, board)) bool = true
-        else return false
-        if (start.piece.get.queen == Queen.isQueen) {
-          if (minusCheck(start, board)) bool = true
-          else return false
-        }
-      }
-    }
-    bool
-  }
-
-  override def isWhiteBlocked(board: Board): Boolean = {
-    var bool : Boolean = false
-    for (y <- 0 until 8;
-         x <- 0 until 8) {
-      var start : CellTrait = board.cells.cell(y,x)
-      if (start.piece.isDefined && start.piece.get.color == Color.white) {
-        if (minusCheck(start, board)) bool = true
-        else return false
-        if (start.piece.get.queen == Queen.isQueen) {
+      var start : CellTrait = board.cells.cell(y, x)
+      if (start.piece.isDefined && start.piece.get.color == color)
+        if (color == Color.black)
           if (plusCheck(start, board)) bool = true
           else return false
-        }
-      }
+          if (start.piece.get.queen == Queen.isQueen)
+            if (minusCheck(start, board)) bool = true
+            else return false
+        if (color == Color.white)
+          if (minusCheck(start, board)) bool = true
+          else return false
+          if (start.piece.get.queen == Queen.isQueen)
+            if (plusCheck(start, board)) bool = true
+            else return false
     }
     bool
   }

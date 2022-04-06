@@ -32,8 +32,9 @@ trait GameTrait {
   def cell(y:Int, x:Int): CellTrait
   def hasWon(start:CellTrait, destination:CellTrait) : Option[Color.Value]
   def isBlocked(board: Board) : Option[Color.Value]
-  def isBlackBlocked(board: Board): Boolean
-  def isWhiteBlocked(board: Board): Boolean
+  def isColorBlocked(board: Board, color: Color.Value): Boolean
+  //def isBlackBlocked(board: Board): Boolean
+  //def isWhiteBlocked(board: Board): Boolean
   def plusCheck(start:CellTrait, board: Board): Boolean
   def minusCheck(start:CellTrait, board: Board) : Boolean
   def yxPlusOneCheck(s:CellTrait) : Boolean

@@ -61,9 +61,11 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
 
   override def isBlocked(board: Board) : Option[Color.Value] = None
 
-  override def isBlackBlocked(board: Board): Boolean = false
+  def isColorBlocked(board: Board, color: Color.Value): Boolean = false
 
-  override def isWhiteBlocked(board: Board): Boolean = false
+  //override def isBlackBlocked(board: Board): Boolean = false
+
+  //override def isWhiteBlocked(board: Board): Boolean = false
 
   override def plusCheck(start:CellTrait, board: Board): Boolean = false
 
