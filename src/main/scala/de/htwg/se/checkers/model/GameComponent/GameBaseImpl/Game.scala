@@ -72,8 +72,8 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
           case Color.white => return (moveQueenRules(s,d), Some(pw), startColor)
         }
       else startColor match {
-          case Color.black => return (Some(queenDestinationCheck(s, d)), moveBlackRules(s, d), startColor)
-          case Color.white => return (moveWhiteRules(s, d), Some(queenDestinationCheck(s, d)), startColor)
+          case Color.black => return (Some(queenDestinationCheck(s, d)), moveRules(s, d, startColor), startColor)
+          case Color.white => return (moveRules(s, d, startColor), Some(queenDestinationCheck(s, d)), startColor)
         }
     }
     (None, None, lmc)
