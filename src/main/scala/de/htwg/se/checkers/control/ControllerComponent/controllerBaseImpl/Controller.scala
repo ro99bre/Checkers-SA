@@ -9,6 +9,8 @@ import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Color, Game}
 import de.htwg.se.checkers.model.GameComponent.GameTrait
 import de.htwg.se.checkers.util.UndoManager
 
+import scala.util.{Failure, Success, Try}
+
 class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
 
   private val undoManager = new UndoManager
@@ -36,13 +38,26 @@ class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
   }
 
   override def save() : Unit = {
-    fileIo.save(game)
-    notifyObservers()
+    fileIo.save(game) match {
+      case Success(option) =>
+        notifyObservers()
+        println("Game saved")
+      case Failure(exception) =>
+        println("Saving failed")
+    }
   }
 
   override def load(): Unit = {
-    game = fileIo.load()
-    notifyObservers()
+    val loadedGame: Try[GameTrait] = fileIo.load()
+    loadedGame match {
+      case Success(option) =>
+        game = option
+        println("Loaded Game")
+        notifyObservers()
+      case Failure(exception) =>
+        println("Failed to load Game")
+        game
+    }
   }
 
   override def getGame(): GameTrait = game
