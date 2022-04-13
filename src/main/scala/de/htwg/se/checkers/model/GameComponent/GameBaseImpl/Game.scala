@@ -220,26 +220,57 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     else None
   }
 
-  override def isColorBlocked(board: Board, color: Color.Value): Boolean = {
-    var bool : Boolean = false
-    for (y <- 0 until 8;
-         x <- 0 until 8) {
-      var start : CellTrait = board.cells.cell(y, x)
-      if (start.piece.isDefined && start.piece.get.color == color)
-        if (color == Color.black)
-          if (plusCheck(start, board)) bool = true
-          else return false
-          if (start.piece.get.queen == Queen.isQueen)
-            if (minusCheck(start, board)) bool = true
+  def isQueen(cell: CellTrait): Option[Boolean] ={
+    if(cell.piece.isDefined)
+      if(cell.piece.get.queen == Queen.isQueen)
+        return Some(true)
+      else
+        return Some(false)
+    else
+      return None
+  }
+
+  def hasPieceColor(cell: CellTrait): Option[Color.Value] ={
+    if(cell.piece.isDefined)
+      if(cell.piece.get.color == Color.black)
+        return Some(Color.black)
+      else
+        return Some(Color.white)
+    else
+      return None
+  }
+
+  def isColorBlocked(board: Board, color: Color.Value): Boolean = {
+    var isBlocked: Boolean = false
+    (0 until 8) map (x =>
+      (0 until 8) map (y =>
+        var cell : CellTrait = board.cells.cell(x, y)
+        (cell.piece.isDefined, color, hasPieceColor(cell), isQueen(cell)) match {
+          case (false, _, _, _) =>
+            isBlocked = isBlocked
+          case (_, Color.white, Some(Color.black), _) =>
+            isBlocked = isBlocked
+          case (_, Color.black, Some(Color.white), _) =>
+            isBlocked = isBlocked
+          case (true, Color.black, Some(Color.black), Some(false)) =>
+            if (plusCheck(cell, board)) isBlocked = true
             else return false
-        if (color == Color.white)
-          if (minusCheck(start, board)) bool = true
-          else return false
-          if (start.piece.get.queen == Queen.isQueen)
-            if (plusCheck(start, board)) bool = true
+          case (true, Color.black, Some(Color.black), Some(true)) =>
+            if (plusCheck(cell, board)) isBlocked = true
+            if (minusCheck(cell, board)) isBlocked = true
             else return false
-    }
-    bool
+          case (true, Color.white, Some(Color.white), Some(false)) =>
+            if (minusCheck(cell, board)) isBlocked = true
+            else return false
+          case (true, Color.white, Some(Color.white), Some(true)) =>
+            if (minusCheck(cell, board)) isBlocked = true
+            if (plusCheck(cell, board)) isBlocked = true
+            else return false
+        }
+      )
+    )
+
+    return isBlocked
   }
 
   //checks if cells around start cell are empty for possible moves
