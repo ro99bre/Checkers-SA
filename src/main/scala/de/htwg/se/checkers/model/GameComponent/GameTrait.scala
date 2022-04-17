@@ -18,8 +18,6 @@ trait GameTrait {
   def crown(pieces: Vector[Piece], index: Int): Vector[Piece]
   def deCrown(pieces: Vector[Piece], index: Int): Vector[Piece]
   def moveRules(s:CellTrait, d:CellTrait, c:Color.Value): Option[Vector[Piece]]
-  //def moveBlackRules(s:CellTrait, d:CellTrait): Option[Vector[Piece]]
-  //def moveWhiteRules(s:CellTrait, d:CellTrait): Option[Vector[Piece]]
   def kickPieceCheck(s:CellTrait, d:CellTrait): Option[Vector[Piece]]
   def updatePiecesKicked(middlePiece: Piece): Vector[Piece]
   def deKickPieceCheck(s:CellTrait, d:CellTrait, tempboard:Board, opponentColor:Color.Value) : Option[(Board,Vector[Piece],Vector[Piece])]
@@ -33,18 +31,8 @@ trait GameTrait {
   def hasWon(start:CellTrait, destination:CellTrait) : Option[Color.Value]
   def isBlocked(board: Board) : Option[Color.Value]
   def isColorBlocked(board: Board, color: Color.Value): Boolean
-  //def isBlackBlocked(board: Board): Boolean
-  //def isWhiteBlocked(board: Board): Boolean
   def plusCheck(start:CellTrait, board: Board): Boolean
   def minusCheck(start:CellTrait, board: Board) : Boolean
-  //def yxPlusOneCheck(s:CellTrait) : Boolean
-  //def yxPlusMinusOneCheck(s:CellTrait) : Boolean
-  //def yxMinusOneCheck(s:CellTrait) : Boolean
-  //def yxMinusPlusOneCheck(s:CellTrait) : Boolean
-  //def yxPlusTwoCheck(s:CellTrait) : Boolean
-  //def yxPlusMinusTwoCheck(s:CellTrait) : Boolean
-  //def yxMinusTwoCheck(s:CellTrait) : Boolean
-  //def yxMinusPlusTwoCheck(s:CellTrait) : Boolean
   def updateGame(cell: CellTrait, lmc:Color.Value, piece: Option[Piece] = None, index: Option[Int] = None, winner:Option[Color.Value] = None) : GameTrait
 
   def getLastMoveColor() : Color.Value

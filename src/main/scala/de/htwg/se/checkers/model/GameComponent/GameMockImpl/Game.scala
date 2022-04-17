@@ -32,11 +32,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   override def deCrown(pieces: Vector[Piece], index: Int): Vector[Piece] = this.pb
 
   override def moveRules(s: CellTrait, d: CellTrait, c: Color.Value): Option[Vector[Piece]] = None
-
-  //override def moveBlackRules(s:CellTrait, d:CellTrait): Option[Vector[Piece]] = None
-
-  //override def moveWhiteRules(s:CellTrait, d:CellTrait): Option[Vector[Piece]] = None
-
+  
   override def kickPieceCheck(s:CellTrait, d:CellTrait): Option[Vector[Piece]] = None
 
   override def updatePiecesKicked(middlePiece: Piece): Vector[Piece] = this.pw
@@ -62,31 +58,11 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   override def isBlocked(board: Board) : Option[Color.Value] = None
 
   def isColorBlocked(board: Board, color: Color.Value): Boolean = false
-
-  //override def isBlackBlocked(board: Board): Boolean = false
-
-  //override def isWhiteBlocked(board: Board): Boolean = false
-
+  
   override def plusCheck(start:CellTrait, board: Board): Boolean = false
 
   override def minusCheck(start:CellTrait, board: Board) : Boolean = false
-
-  //override def yxPlusOneCheck(s:CellTrait) : Boolean = false
-
-  //override def yxPlusMinusOneCheck(s:CellTrait) : Boolean = false
-
-  //override def yxMinusOneCheck(s:CellTrait) : Boolean = false
-
-  //override def yxMinusPlusOneCheck(s:CellTrait) : Boolean = false
-
-  //override def yxPlusTwoCheck(s:CellTrait) : Boolean = false
-
-  //override def yxPlusMinusTwoCheck(s:CellTrait) : Boolean = false
-
-  //override def yxMinusTwoCheck(s:CellTrait) : Boolean = false
-
-  //override def yxMinusPlusTwoCheck(s:CellTrait) : Boolean = false
-
+  
   override def toString: String = ""
 
   override def updateGame(cell: CellTrait, lmc:Color.Value, piece: Option[Piece] = None, index: Option[Int] = None, winner:Option[Color.Value] = None) : GameTrait = this
