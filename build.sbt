@@ -30,4 +30,4 @@ libraryDependencies ++= javaFXModules.map( m=>
   "org.openjfx" % s"javafx-$m" % "17.0.1" classifier osName
 )
 
-coverageExcludedPackages := ".*GUI.*;.*TUI.*;.*MockImpl.*;.*FileChooserImpl.*"
+//coverageExcludedPackages := ".*GUI.*;.*TUI.*;.*MockImpl.*;.*FileChooserImpl.*"
