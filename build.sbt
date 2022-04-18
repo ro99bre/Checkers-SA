@@ -3,6 +3,9 @@ version := "1.0"
 scalaVersion := "3.1.1"
 crossScalaVersions ++= Seq("2.13.8", "3.1.1")
 
+lazy val root = (project in file("."))
+lazy val textui = (project in file("TextUI")).dependsOn(root)
+
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.11"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.11" % "test"
 libraryDependencies += "org.scalatestplus" %% "junit-4-13" % "3.2.11.0" % "test"

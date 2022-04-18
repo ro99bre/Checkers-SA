@@ -1,4 +1,4 @@
-package de.htwg.se.checkers
+package TextUI
 
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Board, Color, Game, Pieces}
 

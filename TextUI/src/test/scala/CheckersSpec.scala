@@ -1,4 +1,4 @@
-package de.htwg.se.checkers
+package TextUI
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec

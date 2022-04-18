@@ -1,9 +1,10 @@
-package de.htwg.se.checkers
+package TextUI
 
 import com.google.inject.Guice
-import de.htwg.se.checkers.aview.TextUI
+import TextUI.aview.TextUI
 import de.htwg.se.checkers.control.ControllerComponent.ControllerTrait
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Color
+import de.htwg.se.checkers.CheckersModule
 
 object CheckersTUI {
 

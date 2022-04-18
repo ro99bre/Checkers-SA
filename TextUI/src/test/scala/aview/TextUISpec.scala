@@ -1,4 +1,4 @@
-package de.htwg.se.checkers.aview
+package TextUI.aview
 
 import de.htwg.se.checkers.control.ControllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Game
