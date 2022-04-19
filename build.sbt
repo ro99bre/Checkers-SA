@@ -3,8 +3,9 @@ version := "1.0"
 scalaVersion := "3.1.1"
 crossScalaVersions ++= Seq("2.13.8", "3.1.1")
 
-lazy val root = (project in file("."))
+lazy val root = (project in file(".")).dependsOn(storage)
 lazy val textui = (project in file("TextUI")).dependsOn(root)
+lazy val storage = (project in file("StorageManager"))
 
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.11"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.11" % "test"
