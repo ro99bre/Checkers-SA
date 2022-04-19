@@ -1,7 +1,8 @@
 package de.htwg.se.checkers.control.ControllerComponent.controllerBaseImpl
+import FileStorage.FileStorageJson
 import de.htwg.se.checkers.util.Command
 import com.google.inject.{Guice, Inject}
-import net.codingwell.scalaguice.InjectorExtensions._
+import net.codingwell.scalaguice.InjectorExtensions.*
 import de.htwg.se.checkers.CheckersModule
 import de.htwg.se.checkers.control.ControllerComponent.ControllerTrait
 import de.htwg.se.checkers.model.FileIOComponent.FileIOTrait
@@ -38,25 +39,27 @@ class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
   }
 
   override def save() : Unit = {
-    fileIo.save(game) match {
+    val jsonHandler = new JsonHandler
+    val storage = new FileStorageJson
+    storage.save(jsonHandler.generate(game)) match {
       case Success(option) =>
-        notifyObservers()
         println("Game saved")
+        notifyObservers()
       case Failure(exception) =>
         println("Saving failed")
     }
   }
 
   override def load(): Unit = {
-    val loadedGame: Try[GameTrait] = fileIo.load()
-    loadedGame match {
+    val jsonHandler = new JsonHandler
+    val storage = new FileStorageJson
+    storage.load() match {
       case Success(option) =>
-        game = option
-        println("Loaded Game")
+        game = jsonHandler.decode(option)
+        println("Game loaded")
         notifyObservers()
       case Failure(exception) =>
-        println("Failed to load Game")
-        game
+        println("Loading failed")
     }
   }
 
