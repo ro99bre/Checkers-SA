@@ -5,7 +5,6 @@ import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions.*
 import de.htwg.se.checkers.CheckersModule
 import de.htwg.se.checkers.control.ControllerComponent.ControllerTrait
-import de.htwg.se.checkers.model.FileIOComponent.FileIOTrait
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Color, Game}
 import de.htwg.se.checkers.model.GameComponent.GameTrait
 import de.htwg.se.checkers.util.UndoManager
@@ -16,7 +15,6 @@ class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
 
   private val undoManager = new UndoManager
   val injector = Guice.createInjector(new CheckersModule)
-  val fileIo = injector.getInstance(classOf[FileIOTrait])
 
   override def createGame():Unit = {
     game = injector.getInstance(classOf[GameTrait])
