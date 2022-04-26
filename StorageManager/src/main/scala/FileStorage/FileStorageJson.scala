@@ -1,10 +1,17 @@
 package FileStorage
 
 import scala.io.{BufferedSource, Source}
-import scala.util.{Success, Try}
+import scala.util.{Failure, Success, Try}
 
 class FileStorageJson {
-  def save(game: String): Try[Unit] = {
+  def save(game: String): Unit = {
+    fileSaver(game) match {
+      case Success(option) => option
+      case Failure(exception) => print("Error saving to file")
+    }
+  }
+
+  def fileSaver(game: String): Try[Unit] = {
     import java.io._
     println("Save in FileStorage")
     Try {
@@ -13,13 +20,20 @@ class FileStorageJson {
       pw.close()
     }
   }
-  
-  def load(): Try[String] = {
-    Try {
-      val source: BufferedSource = Source.fromFile("game.json")
-      val sourceString: String = source.getLines().mkString
-      source.close()
-      sourceString
+
+  def load(): String = {
+    fileLoader("game.json") match {
+      case Success(value) => value
+      case Failure(exception) => "Error loading file"
+    }
+  }
+
+  def fileLoader(filename: String): Try[String] = {
+    Try{
+      val file = Source.fromFile(filename)
+      val game: String = file.getLines().mkString
+      file.close()
+      game
     }
   }
 }
