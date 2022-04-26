@@ -34,4 +34,10 @@ libraryDependencies ++= javaFXModules.map( m=>
   "org.openjfx" % s"javafx-$m" % "17.0.1" classifier osName
 )
 
+val AkkaVersion = "2.6.19"
+val AkkaHttpVersion = "10.2.9"
+libraryDependencies += ("com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion).cross(CrossVersion.for3Use2_13)
+libraryDependencies += ("com.typesafe.akka" %% "akka-stream" % AkkaVersion).cross(CrossVersion.for3Use2_13)
+libraryDependencies += ("com.typesafe.akka" %% "akka-http" % AkkaHttpVersion).cross(CrossVersion.for3Use2_13)
+
 //coverageExcludedPackages := ".*GUI.*;.*TUI.*;.*MockImpl.*;.*FileChooserImpl.*"
