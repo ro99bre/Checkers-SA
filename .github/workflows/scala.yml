@@ -16,11 +16,23 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Build Code
+    - name: Build Code for Base Application
       run: sbt compile
 
-    - name: Run tests
+    - name: Build Code for Storage Manager
+      run: sbt storage/compile
+
+    - name: Build Code for TextUI
+      run: sbt textui/compile
+
+    - name: Run tests for Base Application
       run: sbt test
+
+    # - name: Run tests for Storage Manager
+    #   run: sbt storage/test
+
+    - name: Run tests for TextUI
+      run: sbt textui/test
 
     # - name: Upload coverage data to Coveralls
     #   run: sbt coverageReport coveralls
