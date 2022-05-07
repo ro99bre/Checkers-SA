@@ -3,7 +3,16 @@ version := "1.0"
 scalaVersion := "3.1.1"
 crossScalaVersions ++= Seq("2.13.8", "3.1.1")
 
-lazy val root = (project in file(".")).dependsOn(storage)
+lazy val root = (project in file("."))
+  .dependsOn(storage)
+  .settings(
+    assembly / assemblyOutputPath :=  file("artifacts/Checkers-" + version.value + ".jar"),
+    assembly / assemblyMergeStrategy := {
+    case PathList("reference.conf") => MergeStrategy.concat
+    case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+    case x => MergeStrategy.first
+  })
+
 lazy val textui = (project in file("TextUI")).dependsOn(root)
 lazy val storage = (project in file("StorageManager"))
 
