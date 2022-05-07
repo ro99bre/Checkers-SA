@@ -1,16 +1,8 @@
-FROM openjdk:14-buster
-ARG SBT_VERSION=1.3.13
+FROM eclipse-temurin:17-alpine
+ARG CHECKERS_CORE_VERSION=1.0
 
-# Tnstall sbt
-RUN \
-    curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
-    dpkg -i sbt-$SBT_VERSION.deb && \
-    rm sbt-$SBT_VERSION.deb && \
-    apt-get update && \
-    apt-get install -y sbt libxrender1 libxtst6 libxi6 openjfx
+ADD artifacts/Checkers-$CHECKERS_CORE_VERSION.jar Checkers.jar
+RUN echo $CHECKERS_CORE_VERSION > VERSION.txt
+EXPOSE 8080
 
-WORKDIR /Sources
-ADD . /Sources
-RUN sbt compile
-
-CMD sbt run
+CMD java -jar Checkers.jar

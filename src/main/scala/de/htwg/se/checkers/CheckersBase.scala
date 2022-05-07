@@ -73,6 +73,6 @@ object CheckersBase {
         },
       )
 
-    Http().newServerAt("localhost", 8080).bind(route)
+    Http().newServerAt("0.0.0.0", 8080).bind(route)
   }
 }
