@@ -48,7 +48,7 @@ class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
 
     implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext: ExecutionContextExecutor = system.executionContext
-    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri = "http://localhost:8001/game", entity = gamestate))
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri = "http://checkers-storage:8001/game", entity = gamestate))
   }
 
   override def load(): Unit = {
@@ -57,7 +57,7 @@ class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
     implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
-    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://localhost:8001/game"))
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://checkers-storage:8001/game"))
 
     responseFuture.onComplete {
       case Success(res) => {

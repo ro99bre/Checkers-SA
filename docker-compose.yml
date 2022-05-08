@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+    checkers-core:
+        container_name: checkers-core
+        image: checkers-core:latest
+
+        ports:
+          - "80:8080"
+
+        networks:
+            - checkers
+
+        restart: unless-stopped
+
+    checkers-storage:
+        container_name: checkers-storage
+        image: checkers-storage:latest
+
+        networks:
+            - checkers
+
+        restart: unless-stopped
+
+
+networks:
+    checkers:
+
