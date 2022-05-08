@@ -3,10 +3,8 @@ name: Checkers Build and Test
 on: [push]
 
 jobs:
-  build:
-
+  compile_and_test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
 
@@ -39,3 +37,39 @@ jobs:
     #   env:
     #     COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     #     COVERALLS_FLAG_NAME: Scala ${{ matrix.scala }}
+
+  docker_Checkers:
+    runs-on: ubuntu-latest
+    needs: compile_and_test
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Build Artifact for Base Application
+      run: sbt assembly
+
+    - name: Build Docker Image for Base Application
+      run: docker build .
+
+  docker_StorageManager:
+    runs-on: ubuntu-latest
+    needs: compile_and_test
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Build Artifact for Base Application
+      run: sbt storage/assembly
+
+    - name: Build Docker Image for Base Application
+      run: docker build StorageManager/
