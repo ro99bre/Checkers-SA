@@ -33,6 +33,6 @@ object StorageManager {
         }
       )
 
-    Http().newServerAt("localhost", 8001).bind(route)
+    Http().newServerAt("0.0.0.0", 8001).bind(route)
   }
 }
