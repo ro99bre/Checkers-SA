@@ -5,7 +5,8 @@ crossScalaVersions ++= Seq("2.13.8", "3.1.1")
 
 lazy val storage = (project in file("."))
   .settings(
-    assembly / assemblyOutputPath :=  file("artifacts/StorageManager-" + version.value + ".jar"),
+    assembly / assemblyOutputPath :=
+      file(baseDirectory.value + "/artifacts/StorageManager-" + version.value + ".jar"),
     assembly / assemblyMergeStrategy := {
     case PathList("reference.conf") => MergeStrategy.concat
     case PathList("META-INF", xs @ _*) => MergeStrategy.discard
