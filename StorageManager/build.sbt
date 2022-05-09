@@ -8,9 +8,9 @@ lazy val storage = (project in file("."))
     assembly / assemblyOutputPath :=
       file(baseDirectory.value + "/artifacts/StorageManager-" + version.value + ".jar"),
     assembly / assemblyMergeStrategy := {
-    case PathList("reference.conf") => MergeStrategy.concat
-    case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-    case x => MergeStrategy.first
+      case PathList("reference.conf") => MergeStrategy.concat
+      case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+      case x => MergeStrategy.first
   })
 
 libraryDependencies += "com.google.inject" % "guice" % "5.1.0"
