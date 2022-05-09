@@ -1,4 +1,4 @@
-package FileStorage
+package storage.FileStorage
 
 import scala.io.{BufferedSource, Source}
 import scala.util.{Failure, Success, Try}
@@ -13,7 +13,7 @@ class FileStorageJson {
 
   def fileSaver(game: String): Try[Unit] = {
     import java.io._
-    println("Save in FileStorage")
+    println("Save in storage.FileStorage")
     Try {
       val pw = new PrintWriter(new File("game.json"))
       pw.write(game)
