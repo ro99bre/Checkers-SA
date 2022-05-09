@@ -13,6 +13,9 @@ lazy val storage = (project in file("."))
     case x => MergeStrategy.first
   })
 
+libraryDependencies += "com.google.inject" % "guice" % "5.1.0"
+libraryDependencies += ("net.codingwell" %% "scala-guice" % "5.0.2").cross(CrossVersion.for3Use2_13)
+
 val AkkaVersion = "2.6.19"
 val AkkaHttpVersion = "10.2.9"
 libraryDependencies += ("com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion).cross(CrossVersion.for3Use2_13)
