@@ -1,0 +1,26 @@
+$ sbt storage/clean storage/compile
+[info] welcome to sbt 1.6.2 (Oracle Corporation Java 17)
+[info] loading global plugins from C:\Users\Robert\.sbt\1.0\plugins
+[info] loading settings for project sa-projekt-sose22-build from plugins.sbt ...
+[info] loading project definition from D:\HTWG\Vertiefungsrichtung_SE\5_Software Architekturen\SA-Projekt-SoSe22\project
+[info] loading settings for project root from build.sbt ...
+[info] loading settings for project textui from build.sbt ...
+[info] loading settings for project storage from build.sbt ...
+[info] set current project to Checkers (in build file:/D:/HTWG/Vertiefungsrichtung_SE/5_Software%20Architekturen/SA-Projekt-SoSe22/)
+[success] Total time: 0 s, completed 10.05.2022, 00:05:40
+[info] compiling 16 Scala sources to D:\HTWG\Vertiefungsrichtung_SE\5_Software Architekturen\SA-Projekt-SoSe22\StorageManager\target\scala-3.1.1\classes ...
+[warn] -- Warning: D:\HTWG\Vertiefungsrichtung_SE\5_Software Architekturen\SA-Projekt-SoSe22\StorageManager\src\main\scala\storage\SlickStorage\Storage.scala:13:19
+[warn] 13 |  val boardTable = TableQuery[Board]
+[warn]    |                   ^
+[warn]    |Scala 2 macro cannot be used in Dotty, this call will crash at runtime. See https://dotty.epfl.ch/docs/reference/dropped-features/macros.html
+[warn] -- [E029] Pattern Match Exhaustivity Warning: D:\HTWG\Vertiefungsrichtung_SE\5_Software Architekturen\SA-Projekt-SoSe22\StorageManager\src\main\scala\model\GameComponent\GameBaseImpl\Game.scala:248:8
+[warn] 248 |        (cell.piece.isDefined, color, hasPieceColor(cell), isQueen(cell)) match {
+[warn]     |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[warn]     |        match may not be exhaustive.
+[warn]     |
+[warn]     |        It would fail on pattern case: (true, _, _, _)
+[warn] two warnings found
+[warn] two warnings found
+[info] done compiling
+
+

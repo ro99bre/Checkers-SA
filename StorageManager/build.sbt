@@ -26,3 +26,5 @@ libraryDependencies += ("com.typesafe.akka" %% "akka-http" % AkkaHttpVersion).cr
 libraryDependencies += ("com.typesafe.slick" %% "slick" % "3.3.3").cross(CrossVersion.for3Use2_13)
 libraryDependencies += "org.slf4j" % "slf4j-nop" % "1.7.36"
 libraryDependencies += ("com.typesafe.slick" %% "slick-hikaricp" % "3.3.3").cross(CrossVersion.for3Use2_13)
+
+scalacOptions ++= Seq("-Xignore-scala2-macros")
