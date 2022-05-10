@@ -18,9 +18,10 @@ function move(y, x) {
         //Complete move operation
     } else {
         $.ajax({
-            method: "GET",
-            url: "/move/sx="+sx+"/sy="+sy+"/dx="+x+"/dy="+y,
+            method: "PUT",
+            url: "/game/move",
             dataType: "json",
+            data: '{ "from": { "x": ' + sx + ', "y": ' + sy + ' }, "to": { "x": ' + x + ', "y": ' + y + ' } }',
 
             success: function (result) {
                 updateGameBoard(result);
@@ -59,8 +60,8 @@ function showGameSuccessBanner(message) {
 
 function undo() {
     $.ajax({
-        method: "GET",
-        url: "/undo",
+        method: "DELETE",
+        url: "/game/undo",
         dataType: "json",
 
         success: function (result) {
@@ -78,8 +79,8 @@ function undo() {
 
 function redo() {
     $.ajax({
-        method: "GET",
-        url: "/redo",
+        method: "PUT",
+        url: "/game/redo",
         dataType: "json",
 
         success: function (result) {
@@ -97,8 +98,8 @@ function redo() {
 
 function save(fileName) {
     $.ajax({
-        method: "GET",
-        url: "/save?fileName=" + fileName,
+        method: "POST",
+        url: "/game/save",
         dataType: "json",
 
         success: function (result) {
@@ -118,7 +119,7 @@ function save(fileName) {
 function load(fileName) {
     $.ajax({
         method: "GET",
-        url: "/load?fileName=" + fileName,
+        url: "/game/load",
         dataType: "json",
 
         success: function (result) {
@@ -174,16 +175,16 @@ function printGameBoard(){
             if(gameBoard.game[row][col][1] !== undefined) {
                 //Queen Piece
                 if(gameBoard.game[row][col][2] === true) {
-                    $("#field-" + row + "-" + col).attr('src', 'assets/images/game/' + gameBoard.game[row][col][0] + gameBoard.game[row][col][1] + 'queen' + '.jpg');
+                    $("#field-" + row + "-" + col).attr('src', 'images/game/' + gameBoard.game[row][col][0] + gameBoard.game[row][col][1] + 'queen' + '.jpg');
                     $("#field-" + row + "-" + col).attr('alt', gameBoard.game[row][col][0] + ' Tile' + gameBoard.game[row][col][1] + ' Queen');
                     //Normal Piece
                 } else {
-                    $("#field-" + row + "-" + col).attr('src', 'assets/images/game/' + gameBoard.game[row][col][0] + gameBoard.game[row][col][1] +'.jpg');
+                    $("#field-" + row + "-" + col).attr('src', 'images/game/' + gameBoard.game[row][col][0] + gameBoard.game[row][col][1] +'.jpg');
                     $("#field-" + row + "-" + col).attr('alt', gameBoard.game[row][col][0] + ' Tile' + gameBoard.game[row][col][1] + ' Piece');
                 }
                 //Empty Cell
             } else {
-                $("#field-" + row + "-" + col).attr('src', 'assets/images/game/' + gameBoard.game[row][col][0] + '.jpg');
+                $("#field-" + row + "-" + col).attr('src', 'images/game/' + gameBoard.game[row][col][0] + '.jpg');
                 $("#field-" + row + "-" + col).attr('alt', gameBoard.game[row][col][0] + ' Tile');
             }
         }
@@ -226,8 +227,8 @@ function createClickListener(){
 
 function initGame() {
     $.ajax({
-        method: "GET",
-        url: "/jsonGame",
+        method: "POST",
+        url: "/game/create",
         dataType: "json",
 
         success: function (jsonData) {
