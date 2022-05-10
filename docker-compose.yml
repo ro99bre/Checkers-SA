@@ -3,7 +3,7 @@ version: '3'
 services:
     checkers-webui:
         container_name: checkers-webui
-        image: checkers-webui:latest
+        image: ghcr.io/ro99bre/checkers-sa/checkers-webui:latest
 
         ports:
           - "80:80"
@@ -15,7 +15,7 @@ services:
 
     checkers-core:
         container_name: checkers-core
-        image: checkers-core:latest
+        image: ghcr.io/ro99bre/checkers-sa/checkers-core:latest
 
         networks:
             - checkers
@@ -24,7 +24,7 @@ services:
 
     checkers-storage:
         container_name: checkers-storage
-        image: checkers-storage:latest
+        image: ghcr.io/ro99bre/checkers-sa/checkers-storage:latest
 
         networks:
             - checkers
