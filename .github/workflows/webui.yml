@@ -1,0 +1,15 @@
+name: WebUI Container Creation
+
+on:
+  push:
+    paths:
+      - 'WebUI/**'
+
+jobs:
+  docker_WebUI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Docker Image for WebUI
+        run: docker build WebUI/
