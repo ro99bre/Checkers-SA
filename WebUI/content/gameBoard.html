@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkers Game Board</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Stylesheets-->
+    <link rel="stylesheet" media="screen" href="stylesheets/bootstrap-5.1.3.css">
+    <link rel="stylesheet" media="screen" href="stylesheets/screen.gameboard.css">
+</head>
+<body>
+<!--Navigation Bar-->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="startscreen">Checkers</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="tutorial">Tutorial</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="currentGame" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Aktuelles Spiel
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="currentGame">Neu laden</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="newGame">Neues Spiel erstellen</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--Toolbar-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="btn-toolbar" role="toolbar">
+                <div class="d-grid gap-2 d-md-block col-12 mx-auto" role="group">
+                    <button type="button" class="btn btn-danger" id="undo-button">Undo</button>
+                    <button type="button" class="btn btn-secondary" id="redo-button">Redo</button>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#loadModal">Load
+                    </button>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#saveModal">Save
+                    </button>
+                    <label id="turn label">Select Source Tile</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+<!--Main Content-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <table class="GameBoard">
+                @for(row <- 0 until 8) {
+                <tr>
+                    @for(col <- 0 until 8) {
+                    <td>
+                        <img class="field" id="field-@row-@col"/>
+                    </td>
+                    }
+                </tr>
+                }
+            </table>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+<!--Modal for saving-->
+<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="saveModalLabel">Save Game</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Enter Filename</p>
+                <label for="savename">Save:</label>
+                <input type="text" id="savename" name="savename"><br><br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save-button">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal for loading-->
+<div class="modal" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="loadModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Load Game</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Enter Filename</p>
+                <label for="loadname">Load:</label>
+                <input type="text" id="loadname" name="loadname"><br>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="load-button">Load changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Load Bootstrap and JQuery-->
+<script src="javascripts/jquery-3.6.0.min.js"></script>
+<script src="javascripts/bootstrap-4.6.1.bundle.min.js"></script>
+<!--Script to move, undo, redo, save & load-->
+<script src="javascripts/checkers.js"></script>
+</body>
+</html>
