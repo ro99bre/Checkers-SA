@@ -1,12 +1,21 @@
 version: '3'
 
 services:
+    checkers-webui:
+        container_name: checkers-webui
+        image: checkers-webui:latest
+
+        ports:
+          - "80:80"
+
+        networks:
+            - checkers
+
+        restart: unless-stopped
+
     checkers-core:
         container_name: checkers-core
         image: checkers-core:latest
-
-        ports:
-          - "80:8080"
 
         networks:
             - checkers
