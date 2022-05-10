@@ -1,7 +1,7 @@
 FROM nginx:latest
 
 ADD config  /etc/nginx/conf.d
-ADD content /var/www/html
+ADD content /usr/share/nginx/html
 
 EXPOSE 80
 EXPOSE 443
