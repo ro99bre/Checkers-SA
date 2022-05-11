@@ -31,6 +31,20 @@ services:
 
         restart: unless-stopped
 
+    checkers-db:
+        container_name: checkers-db
+        image: postgres:14
+
+        networks:
+            - checkers
+
+        environment:
+            - POSTGRES_USER=checkers
+            - POSTGRES_PASSWORD=checkers@postgresql
+            - POSTGREA_DB=checkers
+
+        restart: unless-stopped
+
 
 networks:
     checkers:
