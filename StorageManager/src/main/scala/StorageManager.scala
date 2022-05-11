@@ -1,6 +1,7 @@
-package FileStorage
+package storage
 
-import FileStorage.FileStorageJson
+import storage.FileStorage.FileStorageJson
+import storage.SlickStorage.Storage
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
@@ -14,6 +15,7 @@ object StorageManager {
   def main(args: Array[String]): Unit = {
 
     val fileStorage = new FileStorageJson
+    val databaseStorage = new Storage
     implicit val system = ActorSystem(Behaviors.empty, "my-system")
     implicit val executionContext = system.executionContext
 
@@ -21,12 +23,12 @@ object StorageManager {
       concat(
         get {
           path("game") {
-            complete(HttpEntity(ContentTypes.`application/json`, fileStorage.load()))
+            complete(HttpEntity(ContentTypes.`application/json`, databaseStorage.load()))
           }
         },
         post {
           path("game") {
-            entity(as [String]) { game => fileStorage.save(game)
+            entity(as [String]) { game => databaseStorage.save(game)
               complete("game saved")
             }
           }
