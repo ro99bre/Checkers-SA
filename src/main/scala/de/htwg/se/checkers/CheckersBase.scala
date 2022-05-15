@@ -8,6 +8,7 @@ import akka.http.scaladsl.server.Directives.{as, complete, concat, entity, get, 
 import akka.http.scaladsl.server.Directives._
 import com.google.inject.Guice
 import de.htwg.se.checkers.control.ControllerComponent.ControllerTrait
+import de.htwg.se.checkers.util.JsonHandler
 
 import play.api.libs.json.{JsObject, JsValue, Json, Writes}
 
@@ -20,13 +21,14 @@ object CheckersBase {
 
     implicit val system = ActorSystem(Behaviors.empty, "my-system")
     implicit val executionContext = system.executionContext
+    val jsonHandler = new JsonHandler
 
     val route =
       concat(
         post {
           path("game" / "create") {
             controller.createGame()
-            complete(HttpEntity(ContentTypes.`application/json`, controller.gameToString))
+            complete(HttpEntity(ContentTypes.`application/json`, jsonHandler.generate(controller.getGame())))
            }
         },
         put {
@@ -43,32 +45,32 @@ object CheckersBase {
               val destY: Int = (destination \\ "y") (0).as[Int]
 
               controller.move(sX, sY, destX, destY)
-              complete(HttpEntity(ContentTypes.`application/json`, controller.gameToString))
+              complete(HttpEntity(ContentTypes.`application/json`, jsonHandler.generate(controller.getGame())))
             }
           }
         },
         delete {
           path("game" / "undo") {
             controller.undo()
-            complete(HttpEntity(ContentTypes.`application/json`, controller.gameToString))
+            complete(HttpEntity(ContentTypes.`application/json`, jsonHandler.generate(controller.getGame())))
           }
         },
         put {
           path("game" / "redo") {
             controller.redo()
-            complete(HttpEntity(ContentTypes.`application/json`, controller.gameToString))
+            complete(HttpEntity(ContentTypes.`application/json`, jsonHandler.generate(controller.getGame())))
           }
         },
         post {
           path("game" / "save") {
             controller.save()
-            complete(HttpEntity(ContentTypes.`application/json`, controller.gameToString))
+            complete(HttpEntity(ContentTypes.`application/json`, jsonHandler.generate(controller.getGame())))
           }
         },
         get {
           path("game" / "load") {
             controller.load()
-            complete(HttpEntity(ContentTypes.`application/json`, controller.gameToString))
+            complete(HttpEntity(ContentTypes.`application/json`, jsonHandler.generate(controller.getGame())))
           }
         },
       )
