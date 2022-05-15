@@ -1,4 +1,4 @@
-package de.htwg.se.checkers.control.ControllerComponent.controllerBaseImpl
+package de.htwg.se.checkers.util
 
 import com.google.inject.Guice
 import de.htwg.se.checkers.CheckersModule
@@ -112,7 +112,7 @@ class JsonHandler {
     if ((json \ "game" \ "lmc").as[String] == "black") lmc = Color.black
     if ((json \ "game" \ "winnerColor").as[String] == "black") winnerColor = Some(Color.black)
     if ((json \ "game" \ "winnerColor").as[String] == "white") winnerColor = Some(Color.white)
-    
+
     game = Game(board, pb, pw, lmc, winnerColor)
     game
   }

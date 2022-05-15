@@ -13,6 +13,7 @@ import de.htwg.se.checkers.control.ControllerComponent.ControllerTrait
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Color, Game}
 import de.htwg.se.checkers.model.GameComponent.GameTrait
 import de.htwg.se.checkers.util.UndoManager
+import de.htwg.se.checkers.util.JsonHandler
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.{Failure, Success, Try}
