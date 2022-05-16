@@ -7,6 +7,8 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.*
 import akka.http.scaladsl.server.Directives.*
+import model.GameComponent.GameTrait
+import util.JsonHandler.JsonHandler
 
 import scala.io.StdIn
 
@@ -16,6 +18,7 @@ object StorageManager {
 
     val fileStorage = new FileStorageJson
     val databaseStorage = new Storage
+    val jsonHandler = new JsonHandler
     implicit val system = ActorSystem(Behaviors.empty, "my-system")
     implicit val executionContext = system.executionContext
 
@@ -28,7 +31,7 @@ object StorageManager {
         },
         post {
           path("game") {
-            entity(as [String]) { game => databaseStorage.save(game)
+            entity(as [String]) { json => databaseStorage.save(jsonHandler.decode(json))
               complete("game saved")
             }
           }
