@@ -26,7 +26,7 @@ object StorageManager {
       concat(
         get {
           path("game") {
-            complete(HttpEntity(ContentTypes.`application/json`, databaseStorage.load()))
+            complete(HttpEntity(ContentTypes.`application/json`, jsonHandler.generate(databaseStorage.load())))
           }
         },
         post {

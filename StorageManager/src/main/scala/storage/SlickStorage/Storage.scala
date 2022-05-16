@@ -1,8 +1,11 @@
 package storage.SlickStorage
 
-import storage.StorageTrait
-import model.GameComponent.GameTrait
+import com.google.inject.Guice
+import model.GameComponent.GameBaseImpl.{Board, Color, Game, Kicked, Piece, Queen}
 
+import storage.StorageTrait
+import storage.StorageModule
+import model.GameComponent.GameTrait
 import slick.dbio.DBIO
 import slick.lifted.TableQuery
 import slick.jdbc.JdbcBackend
@@ -11,6 +14,7 @@ import slick.jdbc.PostgresProfile.api.*
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.Duration
 
 class Storage extends StorageTrait {
 
@@ -70,8 +74,101 @@ class Storage extends StorageTrait {
     }
   }
 
-  override def load(): String = {
-    val result = Await.result(database.run(boardTable.filter(_.id.equals(0)).result), Duration.Inf)
-    result.head._2
+  override def load(): GameTrait = {
+    val injector = Guice.createInjector(new StorageModule)
+    var game: GameTrait = injector.getInstance(classOf[GameTrait])
+    var board: Board = game.getBoard()
+    var pb: Vector[Piece] = game.getPB()
+    var pw: Vector[Piece] = game.getPW()
+    var lmc: Color.Value = Color.white
+    var winnerColor: Option[Color.Value] = None
+
+    //Cells
+    Await.result(database.run(cellTable.filter(_.name.equals("game1")).filter(_.color.equals("black")).filter(_.piececolor.equals(null)).result
+        .map(_.foreach(f => board.setCell(f._3, f._4, Color.black, None, None, None)))), Duration.Inf)
+
+    Await.result(database.run(cellTable.filter(_.name.equals("game1")).filter(_.color.equals("white")).filter(_.piececolor.equals(null)).result
+      .map(_.foreach(f => board.setCell(f._3, f._4, Color.white, None, None, None)))), Duration.Inf)
+
+    Await.result(database.run(cellTable.filter(_.name.equals("game1")).filter(_.color.equals("black"))
+      .filter(_.piececolor.equals("black")).filter(_.queen.equals("notQueen")).filter(_.kicked.equals("notKicked")).result
+      .map(_.foreach(f => board.setCell(f._3, f._4, Color.black, Some(Color.black), Some(Queen.notQueen), Some(Kicked.notKicked))))), Duration.Inf)
+
+    Await.result(database.run(cellTable.filter(_.name.equals("game1")).filter(_.color.equals("black"))
+      .filter(_.piececolor.equals("white")).filter(_.queen.equals("notQueen")).filter(_.kicked.equals("notKicked")).result
+      .map(_.foreach(f => board.setCell(f._3, f._4, Color.black, Some(Color.white), Some(Queen.notQueen), Some(Kicked.notKicked))))), Duration.Inf)
+
+    Await.result(database.run(cellTable.filter(_.name.equals("game1")).filter(_.color.equals("black"))
+      .filter(_.piececolor.equals("black")).filter(_.queen.equals("isQueen")).filter(_.kicked.equals("notKicked")).result
+      .map(_.foreach(f => board.setCell(f._3, f._4, Color.black, Some(Color.black), Some(Queen.isQueen), Some(Kicked.notKicked))))), Duration.Inf)
+
+    Await.result(database.run(cellTable.filter(_.name.equals("game1")).filter(_.color.equals("black"))
+      .filter(_.piececolor.equals("white")).filter(_.queen.equals("isQueen")).filter(_.kicked.equals("notKicked")).result
+      .map(_.foreach(f => board.setCell(f._3, f._4, Color.black, Some(Color.white), Some(Queen.isQueen), Some(Kicked.notKicked))))), Duration.Inf)
+
+    Await.result(database.run(cellTable.filter(_.name.equals("game1")).filter(_.color.equals("black"))
+      .filter(_.piececolor.equals("black")).filter(_.queen.equals("notQueen")).filter(_.kicked.equals("isKicked")).result
+      .map(_.foreach(f => board.setCell(f._3, f._4, Color.black, Some(Color.black), Some(Queen.notQueen), Some(Kicked.isKicked))))), Duration.Inf)
+
+    Await.result(database.run(cellTable.filter(_.name.equals("game1")).filter(_.color.equals("black"))
+      .filter(_.piececolor.equals("white")).filter(_.queen.equals("notQueen")).filter(_.kicked.equals("isKicked")).result
+      .map(_.foreach(f => board.setCell(f._3, f._4, Color.black, Some(Color.white), Some(Queen.notQueen), Some(Kicked.isKicked))))), Duration.Inf)
+
+    Await.result(database.run(cellTable.filter(_.name.equals("game1")).filter(_.color.equals("black"))
+      .filter(_.piececolor.equals("black")).filter(_.queen.equals("isQueen")).filter(_.kicked.equals("isKicked")).result
+      .map(_.foreach(f => board.setCell(f._3, f._4, Color.black, Some(Color.black), Some(Queen.isQueen), Some(Kicked.isKicked))))), Duration.Inf)
+
+    Await.result(database.run(cellTable.filter(_.name.equals("game1")).filter(_.color.equals("black"))
+      .filter(_.piececolor.equals("white")).filter(_.queen.equals("isQueen")).filter(_.kicked.equals("isKicked")).result
+      .map(_.foreach(f => board.setCell(f._3, f._4, Color.black, Some(Color.white), Some(Queen.isQueen), Some(Kicked.isKicked))))), Duration.Inf)
+
+    //Pieces
+    Await.result(database.run(pieceTable.filter(_.name.equals("game1")).filter(_.piececolor.equals("black"))
+      .filter(_.queen.equals("notQueen")).filter(_.kicked.equals("notKicked")).result
+      .map(_.foreach(f => pb = game.setPiece(f._3, pb, Color.black, Queen.notQueen, Kicked.notKicked)))), Duration.Inf)
+
+    Await.result(database.run(pieceTable.filter(_.name.equals("game1")).filter(_.piececolor.equals("white"))
+      .filter(_.queen.equals("notQueen")).filter(_.kicked.equals("notKicked")).result
+      .map(_.foreach(f => pw = game.setPiece(f._3, pb, Color.white, Queen.notQueen, Kicked.notKicked)))), Duration.Inf)
+
+    Await.result(database.run(pieceTable.filter(_.name.equals("game1")).filter(_.piececolor.equals("black"))
+      .filter(_.queen.equals("isQueen")).filter(_.kicked.equals("notKicked")).result
+      .map(_.foreach(f => pb = game.setPiece(f._3, pb, Color.black, Queen.isQueen, Kicked.notKicked)))), Duration.Inf)
+
+    Await.result(database.run(pieceTable.filter(_.name.equals("game1")).filter(_.piececolor.equals("white"))
+      .filter(_.queen.equals("isQueen")).filter(_.kicked.equals("notKicked")).result
+      .map(_.foreach(f => pw = game.setPiece(f._3, pb, Color.white, Queen.isQueen, Kicked.notKicked)))), Duration.Inf)
+
+    Await.result(database.run(pieceTable.filter(_.name.equals("game1")).filter(_.piececolor.equals("black"))
+      .filter(_.queen.equals("notQueen")).filter(_.kicked.equals("isKicked")).result
+      .map(_.foreach(f => pb = game.setPiece(f._3, pb, Color.black, Queen.notQueen, Kicked.isKicked)))), Duration.Inf)
+
+    Await.result(database.run(pieceTable.filter(_.name.equals("game1")).filter(_.piececolor.equals("white"))
+      .filter(_.queen.equals("notQueen")).filter(_.kicked.equals("isKicked")).result
+      .map(_.foreach(f => pw = game.setPiece(f._3, pb, Color.white, Queen.notQueen, Kicked.isKicked)))), Duration.Inf)
+
+    Await.result(database.run(pieceTable.filter(_.name.equals("game1")).filter(_.piececolor.equals("black"))
+      .filter(_.queen.equals("isQueen")).filter(_.kicked.equals("isKicked")).result
+      .map(_.foreach(f => pb = game.setPiece(f._3, pb, Color.black, Queen.isQueen, Kicked.isKicked)))), Duration.Inf)
+
+    Await.result(database.run(pieceTable.filter(_.name.equals("game1")).filter(_.piececolor.equals("white"))
+      .filter(_.queen.equals("isQueen")).filter(_.kicked.equals("isKicked")).result
+      .map(_.foreach(f => pw = game.setPiece(f._3, pb, Color.white, Queen.isQueen, Kicked.isKicked)))), Duration.Inf)
+
+    //Games
+    Await.result(database.run(gameTable.filter(_.name.equals("game1")).filter(_.lmc.equals("black")).result
+      .map(_.foreach(f => lmc = Color.black))), Duration.Inf)
+
+    Await.result(database.run(gameTable.filter(_.name.equals("game1")).filter(_.lmc.equals("white")).result
+      .map(_.foreach(f => lmc = Color.white))), Duration.Inf)
+
+    Await.result(database.run(gameTable.filter(_.name.equals("game1")).filter(_.winnerColor.equals("black")).result
+      .map(_.foreach(f => winnerColor = Some(Color.black)))), Duration.Inf)
+
+    Await.result(database.run(gameTable.filter(_.name.equals("game1")).filter(_.winnerColor.equals("white")).result
+      .map(_.foreach(f => winnerColor = Some(Color.white)))), Duration.Inf)
+
+    game = Game(board, pb, pw, lmc, winnerColor)
+    game
   }
 }
