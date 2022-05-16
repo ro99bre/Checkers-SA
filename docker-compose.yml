@@ -45,6 +45,20 @@ services:
 
         restart: unless-stopped
 
+    checkers-mongodb:
+        container_name: checkers-mongodb
+        image: mongo:5
+
+        networks:
+            - checkers
+
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=checkers
+            - MONGO_INITDB_ROOT_PASSWORD=checkers@mongodb
+            - MONGO_INITDB_DATABASE=checkers
+
+        restart: unless-stopped
+
 
 networks:
     checkers:

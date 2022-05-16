@@ -31,3 +31,6 @@ resolvers += "jitpack" at "https://jitpack.io"
 libraryDependencies += "org.slf4j" % "slf4j-nop" % "1.7.36"
 libraryDependencies += ("com.typesafe.slick" %% "slick-hikaricp" % "3.3.3").cross(CrossVersion.for3Use2_13)
 libraryDependencies += "org.postgresql" % "postgresql" % "42.3.5"
+
+//MongoDB
+libraryDependencies += ("org.mongodb.scala" %% "mongo-scala-driver" % "4.6.0").cross(CrossVersion.for3Use2_13)
