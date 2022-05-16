@@ -2,7 +2,7 @@ package storage.SlickStorage
 
 import slick.jdbc.PostgresProfile.api._
 
-class CellTable(tag: Tag) extends Table[(Int, String, Int, Int, String, Option[String], Option[Boolean], Option[Boolean])](tag, "cells") {
+class CellTable(tag: Tag) extends Table[(Int, String, Int, Int, String, Option[String], Option[String], Option[String])](tag, "cells") {
   def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
   def name: Rep[String] = column[String]("name")
@@ -15,9 +15,9 @@ class CellTable(tag: Tag) extends Table[(Int, String, Int, Int, String, Option[S
 
   def piececolor: Rep[Option[String]] = column[Option[String]]("piececolor")
 
-  def queen: Rep[Option[Boolean]] = column[Option[Boolean]]("queen")
+  def queen: Rep[Option[String]] = column[Option[String]]("queen")
 
-  def kicked: Rep[Option[Boolean]] = column[Option[Boolean]]("kicked")
+  def kicked: Rep[Option[String]] = column[Option[String]]("kicked")
 
   override def * = (id, name, x, y, color, piececolor, queen, kicked)
 }
