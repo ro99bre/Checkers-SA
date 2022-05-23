@@ -21,7 +21,7 @@ import scala.concurrent.{Await, blocking}
 
 class Storage @Inject()extends StorageTrait {
 
-  val uri: String = "mongodb+srv://checkers:checkers123@checkers.jdlck.mongodb.net/?retryWrites=true&w=majority"
+  val uri: String = "mongodb://checkers:checkers123@checkers-mongodb/?retryWrites=true&w=majority"
   System.setProperty("org.mongodb.async.type", "netty")
   val client: MongoClient = MongoClient(uri)
   val db: MongoDatabase = client.getDatabase("checkers")

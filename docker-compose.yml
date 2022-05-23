@@ -40,7 +40,7 @@ services:
 
         environment:
             - POSTGRES_USER=checkers
-            - POSTGRES_PASSWORD=checkers@postgresql
+            - POSTGRES_PASSWORD=checkers123
             - POSTGREA_DB=checkers
 
         restart: unless-stopped
@@ -54,7 +54,7 @@ services:
 
         environment:
             - MONGO_INITDB_ROOT_USERNAME=checkers
-            - MONGO_INITDB_ROOT_PASSWORD=checkers@mongodb
+            - MONGO_INITDB_ROOT_PASSWORD=checkers123
             - MONGO_INITDB_DATABASE=checkers
 
         restart: unless-stopped

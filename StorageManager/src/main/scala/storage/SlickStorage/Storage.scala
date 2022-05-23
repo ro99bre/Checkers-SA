@@ -21,7 +21,7 @@ class Storage extends StorageTrait {
   val database = Database.forURL(
     url = "jdbc:postgresql://checkers-db/checkers",
     user = "checkers",
-    password = "checkers@postgresql",
+    password = "checkers123",
     driver = "org.postgresql.Driver",
   )
 
