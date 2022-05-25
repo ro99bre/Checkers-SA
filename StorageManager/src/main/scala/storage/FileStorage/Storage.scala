@@ -1,11 +1,20 @@
 package storage.FileStorage
 
+import com.google.inject.Inject
+import model.GameComponent.GameBaseImpl.Game
+import model.GameComponent.GameTrait
+import storage.StorageTrait
+import util.JsonHandler.JsonHandler
+
 import scala.io.{BufferedSource, Source}
 import scala.util.{Failure, Success, Try}
 
-class FileStorageJson {
-  def save(game: String): Unit = {
-    fileSaver(game) match {
+class Storage @Inject()extends StorageTrait {
+
+  val jsonHandler = new JsonHandler
+
+  override def save(game: GameTrait): Unit = {
+    fileSaver(jsonHandler.generate(game)) match {
       case Success(option) => option
       case Failure(exception) => print("Error saving to file")
     }
@@ -21,10 +30,10 @@ class FileStorageJson {
     }
   }
 
-  def load(): String = {
+  override def load(): GameTrait = {
     fileLoader("game.json") match {
-      case Success(value) => value
-      case Failure(exception) => "Error loading file"
+      case Success(value) => jsonHandler.decode(value)
+      case Failure(exception) => {println("Error loading file"); new Game}
     }
   }
 
