@@ -5,12 +5,15 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives.{as, complete, concat, entity, get, path, post}
-import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Directives.*
 import com.google.inject.Guice
 import de.htwg.se.checkers.control.ControllerComponent.ControllerTrait
 import de.htwg.se.checkers.util.JsonHandler
-
 import play.api.libs.json.{JsObject, JsValue, Json, Writes}
+
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
+import scala.util.{Failure, Success}
 
 object CheckersBase {
 
@@ -69,8 +72,8 @@ object CheckersBase {
         },
         get {
           path("game" / "load") {
-            controller.load()
-            complete(HttpEntity(ContentTypes.`application/json`, jsonHandler.generate(controller.getGame())))
+            val result: String  = Await.result(controller.load(), Duration.Inf)
+            complete(HttpEntity(ContentTypes.`application/json`, result.toString))
           }
         },
       )

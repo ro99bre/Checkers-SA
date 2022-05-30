@@ -4,6 +4,8 @@ import de.htwg.se.checkers.control.ControllerComponent.ControllerTrait
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Color, Game}
 import de.htwg.se.checkers.model.GameComponent.GameTrait
 
+import scala.concurrent.Future
+
 class Controller(var game:Game) extends ControllerTrait {
 
   def createGame():Unit = {}
@@ -16,7 +18,7 @@ class Controller(var game:Game) extends ControllerTrait {
 
   override def save(): Unit = {}
 
-  override def load(): Unit = {}
+  override def load(): Future[String] = { Future.successful("Game")}
 
   override def getGame(): GameTrait = new Game()
 

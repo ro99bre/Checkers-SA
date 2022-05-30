@@ -4,6 +4,8 @@ import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Color
 import de.htwg.se.checkers.model.GameComponent.GameTrait
 import de.htwg.se.checkers.util.Observable
 
+import scala.concurrent.Future
+
 trait ControllerTrait extends Observable {
   def createGame():Unit
 
@@ -17,7 +19,7 @@ trait ControllerTrait extends Observable {
 
   def save() : Unit
 
-  def load() : Unit
+  def load() : Future[String]
 
   def getGame(): GameTrait
 }

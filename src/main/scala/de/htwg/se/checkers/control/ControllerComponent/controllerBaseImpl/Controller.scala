@@ -15,7 +15,8 @@ import de.htwg.se.checkers.model.GameComponent.GameTrait
 import de.htwg.se.checkers.util.UndoManager
 import de.htwg.se.checkers.util.JsonHandler
 
-import scala.concurrent.{ExecutionContextExecutor, Future}
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor, Future}
 import scala.util.{Failure, Success, Try}
 
 class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
@@ -52,26 +53,26 @@ class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri = "http://checkers-storage:8001/game", entity = gamestate))
   }
 
-  override def load(): Unit = {
+  override def load(): Future[String] = {
     val jsonHandler = new JsonHandler
 
     implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
-    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://checkers-storage:8001/game"))
+    val requestFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://checkers-storage:8001/game"))
 
-    responseFuture.onComplete {
-      case Success(res) => {
-        Unmarshal(res.entity).to[String].onComplete {
-          case Success(result) => {
-            game = jsonHandler.decode(result.toString())
-            notifyObservers()
-          }
-          case Failure(_) => sys.error("Marshal failure")
-        }
-      }
-      case Failure(_) => sys.error("HttpResponse failure")
+    val response = Await.result(requestFuture, Duration.Inf)
+
+    if(!requestFuture.isInstanceOf[Future[Success[HttpResponse]]]) {
+      println("Error Loading Data from Database")
     }
+
+    val responseText = Await.result(Unmarshal(response.entity).to[String], Duration.Inf)
+
+    game = jsonHandler.decode(responseText.toString)
+    notifyObservers()
+
+    return Future.successful(responseText.toString)
   }
 
   override def getGame(): GameTrait = game
