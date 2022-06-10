@@ -6,13 +6,14 @@ crossScalaVersions ++= Seq("2.13.8", "3.1.1")
 lazy val root = (project in file("."))
   .dependsOn(storage)
   .settings(
-    assembly / assemblyOutputPath :=
-      file(baseDirectory.value + "/artifacts/Checkers-" + version.value + ".jar"),
-    assembly / assemblyMergeStrategy := {
-    case PathList("reference.conf") => MergeStrategy.concat
-    case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-    case x => MergeStrategy.first
-  })
+      sbtassembly.AssemblyKeys.assembly / assemblyOutputPath :=
+        file(baseDirectory.value + "/artifacts/Checkers-" + version.value + ".jar"),
+      sbtassembly.AssemblyKeys.assembly / assemblyMergeStrategy := {
+          case PathList("reference.conf") => MergeStrategy.concat
+          case PathList("META-INF", xs@_*) => MergeStrategy.discard
+          case x => MergeStrategy.first
+      })
+  .settings(inConfig(Gatling)(Defaults.testSettings): _*)
 
 lazy val textui = (project in file("TextUI")).dependsOn(root)
 lazy val storage = (project in file("StorageManager"))
@@ -34,3 +35,9 @@ val AkkaHttpVersion = "10.2.9"
 libraryDependencies += ("com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion).cross(CrossVersion.for3Use2_13)
 libraryDependencies += ("com.typesafe.akka" %% "akka-stream" % AkkaVersion).cross(CrossVersion.for3Use2_13)
 libraryDependencies += ("com.typesafe.akka" %% "akka-http" % AkkaHttpVersion).cross(CrossVersion.for3Use2_13)
+
+//Gatling
+enablePlugins(GatlingPlugin)
+libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % "3.7.6" % "test"
+libraryDependencies += "io.gatling"            % "gatling-test-framework"    % "3.7.6" % "test"
+Gatling / scalaSource := sourceDirectory.value / "it" / "scala"

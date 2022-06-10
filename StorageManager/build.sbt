@@ -5,13 +5,14 @@ crossScalaVersions ++= Seq("2.13.8", "3.1.1")
 
 lazy val storage = (project in file("."))
   .settings(
-    assembly / assemblyOutputPath :=
+    sbtassembly.AssemblyKeys.assembly / assemblyOutputPath :=
       file(baseDirectory.value + "/artifacts/StorageManager-" + version.value + ".jar"),
-    assembly / assemblyMergeStrategy := {
+    sbtassembly.AssemblyKeys.assembly / assemblyMergeStrategy := {
       case PathList("reference.conf") => MergeStrategy.concat
-      case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+      case PathList("META-INF", xs@_*) => MergeStrategy.discard
       case x => MergeStrategy.first
-  })
+    })
+  .settings(inConfig(Gatling)(Defaults.testSettings): _*)
 
 libraryDependencies += "com.google.inject" % "guice" % "5.1.0"
 libraryDependencies += ("net.codingwell" %% "scala-guice" % "5.0.2").cross(CrossVersion.for3Use2_13)
@@ -34,3 +35,9 @@ libraryDependencies += "org.postgresql" % "postgresql" % "42.3.5"
 
 //MongoDB
 libraryDependencies += ("org.mongodb.scala" %% "mongo-scala-driver" % "4.6.0").cross(CrossVersion.for3Use2_13)
+
+//Gatling
+enablePlugins(GatlingPlugin)
+libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % "3.7.6" % "test"
+libraryDependencies += "io.gatling"            % "gatling-test-framework"    % "3.7.6" % "test"
+Gatling / scalaSource := sourceDirectory.value / "it" / "scala"
