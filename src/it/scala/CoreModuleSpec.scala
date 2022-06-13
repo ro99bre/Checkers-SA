@@ -17,44 +17,44 @@ class CoreModuleSpec extends Simulation {
   )
 
 
-  private val scn = scenario("RecordedSimulation")
+  private val scn = scenario("Create a game, move some pieces, save it and restore it")
     .exec(
       http("Create Game")
         .post("/game/create")
         .headers(headers_0)
-        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/create.html")))
+        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/create.json")))
     )
     .exec(
       http("Move 2-2 to 3-3")
         .put("/game/move")
         .headers(headers_0)
         .body(RawFileBody("src/it/scala/res/request/move-22-33.json"))
-        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/move-22-33.html")))
+        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/move-22-33.json")))
     )
     .exec(
       http("Move 3-5 to 4-4")
         .put("/game/move")
         .headers(headers_0)
         .body(RawFileBody("src/it/scala/res/request/move-35-44.json"))
-        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/move-35-44.html")))
+        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/move-35-44.json")))
     )
     .exec(
       http("Undo")
         .delete("/game/undo")
         .headers(headers_0)
-        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/move-22-33.html")))
+        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/move-22-33.json")))
     )
     .exec(
       http("Redo")
         .put("/game/redo")
         .headers(headers_0)
-        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/move-35-44.html")))
+        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/move-35-44.json")))
     )
     .exec(
       http("Save current Game")
         .post("/game/save")
         .headers(headers_0)
-        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/save.html")))
+        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/save.json")))
     )
     .exec(
       http("Create Game")
@@ -65,7 +65,7 @@ class CoreModuleSpec extends Simulation {
       http("Reload Game")
         .get("/game/load")
         .headers(headers_0)
-        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/load.html")))
+        .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/load.json")))
     )
 
   setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol)
