@@ -17,6 +17,9 @@ services:
         container_name: checkers-core
         image: ghcr.io/ro99bre/checkers-sa/checkers-core:latest
 
+        ports:
+            - "8080:8080"
+
         networks:
             - checkers
 
@@ -25,6 +28,9 @@ services:
     checkers-storage:
         container_name: checkers-storage
         image: ghcr.io/ro99bre/checkers-sa/checkers-storage:latest
+
+        ports:
+            - "8001:8001"
 
         networks:
             - checkers
