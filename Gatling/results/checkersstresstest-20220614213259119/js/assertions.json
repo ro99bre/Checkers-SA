@@ -1,0 +1,10 @@
+{
+  "simulation": "checkers.CheckersStressTest",
+  "simulationId": "checkersstresstest",
+  "start": 1655242379119,
+  "description": "Postgres Database",
+  "scenarios": ["Checkers Stress Test"],
+  "assertions": [
+
+  ]
+}
