@@ -129,10 +129,10 @@ jobs:
       run: docker ps -a
 
     - name: Run Integration Tests of Core Service
-      run: sbt Gatling/test
+      run: sbt Gatling/testOnly
 
     - name: Run Integration Tests of StorageManager
-      run: sbt Storage/Gatling/test
+      run: sbt storage/Gatling/testOnly
 
   deployment:
     runs-on: ubuntu-latest

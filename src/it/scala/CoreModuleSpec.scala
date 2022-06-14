@@ -56,11 +56,13 @@ class CoreModuleSpec extends Simulation {
         .headers(headers_0)
         .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/save.json")))
     )
+    .pause(2)
     .exec(
       http("Create Game")
         .post("/game/create")
         .headers(headers_0)
     )
+    .pause(2)
     .exec(
       http("Reload Game")
         .get("/game/load")

@@ -22,13 +22,14 @@ class StorageManagerSpec extends Simulation {
       http("Save Json body")
         .post("/game")
         .headers(headers_0)
-        .body(RawFileBody("StorageManager/src/it/scala/res/Game.json"))
+        .body(RawFileBody("src/it/scala/res/Game.json"))
     )
+    .pause(2)
     .exec(
       http("Recall Json")
         .get("/game")
         .headers(headers_0)
-        .check(bodyBytes.is(RawFileBody("StorageManager/src/it/scala/res/Game.json")))
+        .check(bodyBytes.is(RawFileBody("src/it/scala/res/Game.json")))
     )
 
   setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol)

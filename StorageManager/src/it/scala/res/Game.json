@@ -146,9 +146,7 @@
         "x" : 2,
         "color" : "black",
         "piece" : {
-          "piececolor" : "black",
-          "queen" : "notQueen",
-          "kicked" : "notKicked"
+          "piececolor" : "None"
         }
       }, {
         "y" : 3,
@@ -215,7 +213,9 @@
         "x" : 3,
         "color" : "black",
         "piece" : {
-          "piececolor" : "None"
+          "piececolor" : "black",
+          "queen" : "notQueen",
+          "kicked" : "notKicked"
         }
       }, {
         "y" : 4,
@@ -229,9 +229,7 @@
         "x" : 3,
         "color" : "black",
         "piece" : {
-          "piececolor" : "white",
-          "queen" : "notQueen",
-          "kicked" : "notKicked"
+          "piececolor" : "None"
         }
       }, {
         "y" : 6,
@@ -286,7 +284,9 @@
         "x" : 4,
         "color" : "black",
         "piece" : {
-          "piececolor" : "None"
+          "piececolor" : "white",
+          "queen" : "notQueen",
+          "kicked" : "notKicked"
         }
       }, {
         "y" : 5,
