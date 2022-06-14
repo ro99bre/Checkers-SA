@@ -1,0 +1,10 @@
+{
+  "simulation": "checkers.CheckersStressTest",
+  "simulationId": "checkersstresstest",
+  "start": 1655243496483,
+  "description": "MongoDB Database",
+  "scenarios": ["Checkers Stress Test"],
+  "assertions": [
+
+  ]
+}
