@@ -116,9 +116,27 @@ jobs:
         tags: ${{ env.REGISTRY }}/ro99bre/checkers-sa/checkers-storage:latest, ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
 
-  deployment:
+  integration-test:
     runs-on: ubuntu-latest
     needs: [docker_Checkers, docker_StorageManager]
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Start Containers
+      run: docker-compose up -d
+
+    - name: Show running Containers
+      run: docker ps -a
+
+    - name: Run Integration Tests of Core Service
+      run: sbt Gatling/test
+
+    - name: Run Integration Tests of StorageManager
+      run: sbt Storage/Gatling/test
+
+  deployment:
+    runs-on: ubuntu-latest
+    needs: integration-test
     steps:
     - name: Pull Images and Update Service
       uses: appleboy/ssh-action@master
