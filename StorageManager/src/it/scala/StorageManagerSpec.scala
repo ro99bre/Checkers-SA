@@ -32,5 +32,5 @@ class StorageManagerSpec extends Simulation {
         .check(bodyBytes.is(RawFileBody("src/it/scala/res/Game.json")))
     )
 
-  setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol)
+  setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol).assertions(forAll.failedRequests.count.is(0))
 }

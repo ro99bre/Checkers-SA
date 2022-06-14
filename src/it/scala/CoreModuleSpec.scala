@@ -70,5 +70,5 @@ class CoreModuleSpec extends Simulation {
         .check(bodyBytes.is(RawFileBody("src/it/scala/res/answer/load.json")))
     )
 
-  setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol)
+  setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol).assertions(forAll.failedRequests.count.is(0))
 }
